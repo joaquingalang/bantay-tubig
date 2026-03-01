@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
+import { DotGrid } from "@/components/ui/DotGrid";
 
 const HOW_IT_WORKS = [
   {
@@ -29,7 +30,8 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-20 md:py-28">
+      <section className="relative flex flex-col items-center justify-center text-center px-4 py-20 md:py-28 overflow-hidden">
+        <DotGrid />
         <span className="inline-block mb-4 px-3 py-1 rounded-full bg-blue-600/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide uppercase">
           Water Interruption Alerts
         </span>
