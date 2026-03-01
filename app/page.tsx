@@ -1,126 +1,103 @@
+"use client";
+
 import Link from "next/link";
-import { Header } from "@/components/Header";
-import { SignInButton } from "@/components/SignInButton";
-import { LandingSignedIn } from "@/components/LandingSignedIn";
-import { Footer } from "@/components/Footer";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/Button";
 
-export default async function Home() {
+const HOW_IT_WORKS = [
+  {
+    step: "1",
+    title: "Create an account",
+    description: "Sign up with your email and password in seconds.",
+  },
+  {
+    step: "2",
+    title: "Register your mobile numbers",
+    description: "Add up to 3 mobile numbers and choose your barangay.",
+  },
+  {
+    step: "3",
+    title: "Get SMS alerts",
+    description:
+      "We monitor local Facebook announcements and send you an SMS the moment a water interruption is posted.",
+  },
+];
+
+export default function HomePage() {
+  const { user, loading } = useAuth();
+
   return (
-    <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark">
-      <Header />
-      <main className="relative mx-auto flex max-w-7xl flex-grow flex-col px-6 py-16">
-        {/* Hero decorative blur */}
-        <div
-          className="pointer-events-none absolute left-1/2 top-20 h-64 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
-          aria-hidden
-        />
-        <section className="relative flex flex-col items-center text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary">
-            <span className="material-symbols-outlined text-lg">campaign</span>
-            Public Water Alert System
-          </span>
-          <h1 className="mt-6 max-w-3xl text-4xl font-black tracking-tight text-slate-900 dark:text-white sm:text-5xl">
-            Never miss{" "}
-            <span className="text-primary">water interruptions</span> in your
-            area
-          </h1>
-          <p className="mt-4 max-w-xl text-lg text-slate-600 dark:text-slate-400">
-            Bantay Tubig watches official water service announcements and sends
-            you an SMS when your barangay is affected—so you can prepare without
-            checking social media.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <LandingSignedIn
-              fallback={
-                <>
-                  <SignInButton />
-                  <Link
-                    href="/info"
-                    className="inline-flex items-center justify-center rounded-full border border-slate-300 dark:border-slate-600 px-6 py-3 text-base font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
-                  >
-                    Learn More
-                  </Link>
-                </>
-              }
-            />
-          </div>
-          <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
-            Joined by 12,000+ residents
-          </p>
-        </section>
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="flex flex-col items-center justify-center text-center px-4 py-20 md:py-28">
+        <span className="inline-block mb-4 px-3 py-1 rounded-full bg-blue-600/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide uppercase">
+          Water Interruption Alerts
+        </span>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 max-w-2xl leading-tight">
+          Never miss a{" "}
+          <span className="text-blue-400">water interruption</span> announcement
+        </h1>
+        <p className="text-gray-400 text-lg max-w-xl mb-8">
+          Bantay Tubig automatically monitors your local water service Facebook page
+          and sends SMS alerts directly to your phone.
+        </p>
 
-        {/* How It Works */}
-        <section className="relative mt-24 grid gap-8 sm:grid-cols-3">
-          <h2 className="col-span-full text-center text-2xl font-bold text-slate-900 dark:text-white">
-            How It Works
+        {!loading && (
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {user ? (
+              <Link href="/dashboard">
+                <Button size="md">Go to Dashboard</Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/signup">
+                  <Button size="md">Get started — it&apos;s free</Button>
+                </Link>
+                <Link href="/login">
+                  <Button size="md" variant="ghost">
+                    Sign in
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
+        )}
+      </section>
+
+      {/* How it works */}
+      <section className="px-4 py-16 border-t border-gray-800">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-center text-2xl font-bold text-white mb-10">
+            How it works
           </h2>
-          <div className="flex flex-col items-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <span className="material-symbols-outlined text-2xl">login</span>
-            </span>
-            <h3 className="mt-3 font-semibold text-slate-900 dark:text-white">
-              Sign In
-            </h3>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-              Use your Google account to get started.
-            </p>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {HOW_IT_WORKS.map(({ step, title, description }) => (
+              <div key={step} className="flex flex-col items-center text-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-blue-600/15 border border-blue-500/25 flex items-center justify-center text-blue-400 font-bold text-sm">
+                  {step}
+                </div>
+                <h3 className="font-semibold text-white text-sm">{title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+              </div>
+            ))}
           </div>
-          <div className="flex flex-col items-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <span className="material-symbols-outlined text-2xl">
-                contact_phone
-              </span>
-            </span>
-            <h3 className="mt-3 font-semibold text-slate-900 dark:text-white">
-              Register Numbers
-            </h3>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-              Add up to 3 phone numbers for SMS alerts.
-            </p>
-          </div>
-          <div className="flex flex-col items-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-6 text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <span className="material-symbols-outlined text-2xl">
-                notifications
-              </span>
-            </span>
-            <h3 className="mt-3 font-semibold text-slate-900 dark:text-white">
-              Get Alerts
-            </h3>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-              We notify you when your area has a water interruption.
-            </p>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <section className="relative mt-24">
-          <div className="glass-card rounded-2xl p-8 text-center">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              Get Started Now
-            </h2>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Sign in and set up your numbers and area in minutes.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-              <LandingSignedIn
-                fallback={
-                  <>
-                    <SignInButton />
-                    <Link
-                      href="/info"
-                      className="inline-flex items-center justify-center rounded-full border border-slate-300 dark:border-slate-600 px-6 py-3 text-base font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
-                    >
-                      View Recent Alerts
-                    </Link>
-                  </>
-                }
-              />
-            </div>
-          </div>
+      {/* CTA */}
+      {!loading && !user && (
+        <section className="px-4 py-16 border-t border-gray-800 text-center">
+          <h2 className="text-2xl font-bold text-white mb-3">
+            Stay informed, stay prepared.
+          </h2>
+          <p className="text-gray-400 text-sm mb-6">
+            Join residents who never miss a water service announcement.
+          </p>
+          <Link href="/signup">
+            <Button size="md">Create a free account</Button>
+          </Link>
         </section>
-      </main>
-      <Footer />
+      )}
     </div>
   );
 }

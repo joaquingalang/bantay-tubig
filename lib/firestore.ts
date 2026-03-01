@@ -1,16 +1,20 @@
-import { getFirestore } from "firebase/firestore";
 import {
+  getFirestore,
   getDoc,
   setDoc,
-  collection,
-  doc,
-  getDocs,
-  addDoc,
   updateDoc,
-  deleteDoc,
+  doc,
+  collection,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  arrayUnion,
+  Timestamp,
+  type Unsubscribe,
 } from "firebase/firestore";
-import type { SubscriberNumberWithId } from "@/types/subscriber";
 import { getFirebaseApp } from "@/lib/firebase";
+import type { Alert } from "@/types/alert";
 
 function getDb() {
   const app = getFirebaseApp();
@@ -18,60 +22,112 @@ function getDb() {
   return getFirestore(app);
 }
 
-export async function ensureUserInFirestore(uid: string, email: string): Promise<void> {
+// ── Users ──────────────────────────────────────────────────────────────────
+
+export interface UserData {
+  name: string;
+  email: string;
+  mobileNumbers: string[];
+  areaId: string;
+  createdAt: Timestamp;
+}
+
+export async function ensureUserInFirestore(
+  uid: string,
+  name: string,
+  email: string
+): Promise<void> {
   const db = getDb();
   if (!db) return;
   const ref = doc(db, "users", uid);
   const snap = await getDoc(ref);
-  if (!snap.exists()) await setDoc(ref, { email, createdAt: new Date().toISOString() });
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      name,
+      email,
+      mobileNumbers: [],
+      areaId: "",
+      createdAt: Timestamp.now(),
+    });
+  }
 }
 
-export async function getSubscriberNumbers(uid: string): Promise<SubscriberNumberWithId[]> {
-  const db = getDb();
-  if (!db) return [];
-  const snap = await getDocs(collection(db, "users", uid, "numbers"));
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as SubscriberNumberWithId));
-}
-
-export async function addSubscriberNumber(
-  uid: string,
-  data: { phone_number: string; label?: string }
-): Promise<void> {
-  const db = getDb();
-  if (!db) throw new Error("Firebase is not configured.");
-  await addDoc(collection(db, "users", uid, "numbers"), data);
-}
-
-export async function updateSubscriberNumber(
-  uid: string,
-  id: string,
-  data: { phone_number: string; label?: string }
-): Promise<void> {
-  const db = getDb();
-  if (!db) throw new Error("Firebase is not configured.");
-  const ref = doc(db, "users", uid, "numbers", id);
-  await updateDoc(ref, data);
-}
-
-export async function removeSubscriberNumber(uid: string, id: string): Promise<void> {
-  const db = getDb();
-  if (!db) throw new Error("Firebase is not configured.");
-  const ref = doc(db, "users", uid, "numbers", id);
-  await deleteDoc(ref);
-}
-
-export type Subscription = { area: string; is_active: boolean } | null;
-
-export async function getSubscription(uid: string): Promise<Subscription> {
+export async function getUserData(uid: string): Promise<UserData | null> {
   const db = getDb();
   if (!db) return null;
-  const snap = await getDoc(doc(db, "users", uid, "subscription", "current"));
+  const snap = await getDoc(doc(db, "users", uid));
   if (!snap.exists()) return null;
-  return snap.data() as Subscription;
+  return snap.data() as UserData;
 }
 
-export async function setSubscription(uid: string, area: string, is_active: boolean): Promise<void> {
+// ── Mobile Numbers ─────────────────────────────────────────────────────────
+
+export async function addMobileNumber(uid: string, phone: string): Promise<void> {
   const db = getDb();
   if (!db) throw new Error("Firebase is not configured.");
-  await setDoc(doc(db, "users", uid, "subscription", "current"), { area, is_active });
+  const data = await getUserData(uid);
+  if (data && data.mobileNumbers.length >= 3) {
+    throw new Error("You can only register up to 3 mobile numbers.");
+  }
+  await updateDoc(doc(db, "users", uid), {
+    mobileNumbers: arrayUnion(phone),
+  });
+}
+
+export async function updateMobileNumber(
+  uid: string,
+  index: number,
+  phone: string
+): Promise<void> {
+  const db = getDb();
+  if (!db) throw new Error("Firebase is not configured.");
+  const data = await getUserData(uid);
+  if (!data) throw new Error("User not found.");
+  const updated = [...data.mobileNumbers];
+  updated[index] = phone;
+  await updateDoc(doc(db, "users", uid), { mobileNumbers: updated });
+}
+
+export async function removeMobileNumber(uid: string, index: number): Promise<void> {
+  const db = getDb();
+  if (!db) throw new Error("Firebase is not configured.");
+  const data = await getUserData(uid);
+  if (!data) throw new Error("User not found.");
+  const updated = data.mobileNumbers.filter((_, i) => i !== index);
+  await updateDoc(doc(db, "users", uid), { mobileNumbers: updated });
+}
+
+// ── Area ───────────────────────────────────────────────────────────────────
+
+export async function setArea(uid: string, areaId: string): Promise<void> {
+  const db = getDb();
+  if (!db) throw new Error("Firebase is not configured.");
+  await updateDoc(doc(db, "users", uid), { areaId });
+}
+
+// ── Alerts ─────────────────────────────────────────────────────────────────
+
+export function subscribeToAlerts(
+  since: Date,
+  onChange: (alerts: Alert[]) => void
+): Unsubscribe {
+  const db = getDb();
+  if (!db) return () => {};
+  const q = query(
+    collection(db, "alerts"),
+    where("detectedAt", ">=", Timestamp.fromDate(since)),
+    orderBy("detectedAt", "desc")
+  );
+  return onSnapshot(q, (snap) => {
+    const alerts = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Alert));
+    onChange(alerts);
+  });
+}
+
+export async function markAlertRead(alertId: string, uid: string): Promise<void> {
+  const db = getDb();
+  if (!db) return;
+  await updateDoc(doc(db, "alerts", alertId), {
+    readBy: arrayUnion(uid),
+  });
 }
