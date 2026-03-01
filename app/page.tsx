@@ -88,7 +88,8 @@ export default function HomePage() {
 
       {/* CTA */}
       {!loading && !user && (
-        <section className="px-4 py-16 border-t border-gray-800 text-center">
+        <section className="relative px-4 py-16 border-t border-gray-800 text-center overflow-hidden">
+          <DotGrid />
           <h2 className="text-2xl font-bold text-white mb-3">
             Stay informed, stay prepared.
           </h2>

@@ -131,6 +131,12 @@ export function DotGrid({
     }
 
     const parent = canvas.parentElement;
+
+    // Scope the canvas behind siblings without escaping the container.
+    // "isolation: isolate" creates a stacking context on the parent so that
+    // the canvas's z-index: -1 doesn't slip behind the page background.
+    if (parent) parent.style.isolation = "isolate";
+
     const ro = new ResizeObserver(rebuild);
     if (parent) ro.observe(parent);
 
@@ -145,8 +151,9 @@ export function DotGrid({
       ro.disconnect();
       window.removeEventListener("mousemove", onMouseMove);
       parent?.removeEventListener("mouseleave", onMouseLeave);
+      if (parent) parent.style.isolation = "";
     };
   }, [dotSize, gap, proximity, baseOpacity]);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />;
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none -z-10" />;
 }

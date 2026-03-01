@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DotGrid } from "@/components/ui/DotGrid";
 
 export const metadata: Metadata = {
   title: "About | Bantay Tubig",
@@ -7,9 +8,18 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-white mb-2">About Bantay Tubig</h1>
-      <p className="text-gray-400 text-sm mb-8">Water Watch — keeping residents informed.</p>
+    <div>
+      {/* Page header with dot grid */}
+      <div className="relative overflow-hidden border-b border-gray-800 px-4 py-12">
+        <DotGrid />
+        <div className="mx-auto max-w-2xl">
+          <h1 className="text-3xl font-bold text-white mb-2">About Bantay Tubig</h1>
+          <p className="text-gray-400 text-sm">BantayTubig — keeping residents informed.</p>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="mx-auto max-w-2xl px-4 py-10">
 
       <div className="flex flex-col gap-8 text-sm text-gray-300 leading-relaxed">
         <section>
@@ -67,6 +77,7 @@ export default function AboutPage() {
           </p>
         </section>
       </div>
+    </div>
     </div>
   );
 }

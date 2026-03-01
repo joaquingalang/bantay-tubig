@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "@/lib/auth";
 import { Button } from "@/components/ui/Button";
@@ -23,8 +24,8 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-800 bg-[#0a0a0f]/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
-          <span className="text-blue-400">Bantay</span>
-          <span>Tubig</span>
+          <Image src="/logo.png" alt="Bantay Tubig logo" width={28} height={28} className="shrink-0" />
+          <span><span className="text-blue-400">Bantay</span>Tubig</span>
         </Link>
 
         {/* Desktop nav */}

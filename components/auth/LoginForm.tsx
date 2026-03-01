@@ -86,7 +86,7 @@ export function LoginForm() {
           <div className="w-full border-t border-gray-800" />
         </div>
         <div className="relative flex justify-center text-xs text-gray-500">
-          <span className="bg-[#0a0a0f] px-2">or continue with</span>
+          <span className="bg-background-dark px-2">or continue with</span>
         </div>
       </div>
 
