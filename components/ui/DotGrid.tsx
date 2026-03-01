@@ -45,6 +45,7 @@ export function DotGrid({
     let raf = 0;
 
     function rebuild() {
+      if (!canvas) return;
       const parent = canvas.parentElement;
       if (!parent) return;
       const rect = parent.getBoundingClientRect();
@@ -64,6 +65,7 @@ export function DotGrid({
     }
 
     function draw() {
+      if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.save();
       ctx.scale(dpr, dpr);
@@ -120,6 +122,7 @@ export function DotGrid({
     }
 
     function onMouseMove(e: MouseEvent) {
+      if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
