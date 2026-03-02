@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { getUserData, type UserData } from "@/lib/firestore";
 import { PhoneNumberManager } from "@/components/profile/PhoneNumberManager";
 import { AreaSelector } from "@/components/profile/AreaSelector";
+import { SmsToggle } from "@/components/profile/SmsToggle";
 import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
 
@@ -37,6 +38,14 @@ export default function ProfilePage() {
       <p className="text-gray-400 text-sm mb-6">{user.email}</p>
 
       <div className="flex flex-col gap-4">
+        <Card className="p-5">
+          <SmsToggle
+            uid={user.uid}
+            enabled={data.smsEnabled ?? true}
+            onChange={(smsEnabled) => setData({ ...data, smsEnabled })}
+          />
+        </Card>
+
         <Card className="p-5">
           <PhoneNumberManager
             uid={user.uid}

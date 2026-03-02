@@ -29,6 +29,7 @@ export interface UserData {
   email: string;
   mobileNumbers: string[];
   areaId: string;
+  smsEnabled: boolean;
   createdAt: Timestamp;
 }
 
@@ -47,6 +48,7 @@ export async function ensureUserInFirestore(
       email,
       mobileNumbers: [],
       areaId: "",
+      smsEnabled: true,
       createdAt: Timestamp.now(),
     });
   }
@@ -95,6 +97,14 @@ export async function removeMobileNumber(uid: string, index: number): Promise<vo
   if (!data) throw new Error("User not found.");
   const updated = data.mobileNumbers.filter((_, i) => i !== index);
   await updateDoc(doc(db, "users", uid), { mobileNumbers: updated });
+}
+
+// ── SMS Notifications ──────────────────────────────────────────────────────
+
+export async function setSmsEnabled(uid: string, enabled: boolean): Promise<void> {
+  const db = getDb();
+  if (!db) throw new Error("Firebase is not configured.");
+  await updateDoc(doc(db, "users", uid), { smsEnabled: enabled });
 }
 
 // ── Area ───────────────────────────────────────────────────────────────────
