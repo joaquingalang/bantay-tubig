@@ -26,7 +26,7 @@ export default function AboutPage() {
           <h2 className="text-white font-semibold text-base mb-2">The problem</h2>
           <p>
             Residents in our province experience frequent water service interruptions.
-            Announcements are posted on a local Facebook page, but most people miss
+            Interruption advisories are published by the water provider, but most people miss
             them — you have to check manually and hope you catch it in time. This
             leads to residents being caught off guard without stored water.
           </p>
@@ -35,19 +35,19 @@ export default function AboutPage() {
         <section>
           <h2 className="text-white font-semibold text-base mb-2">What Bantay Tubig does</h2>
           <p>
-            Bantay Tubig automatically monitors the local water service Facebook page
-            every 30 minutes. When a water interruption announcement is detected,
-            it immediately sends an SMS alert to all registered residents — no app
-            to open, no feed to check. Just a text message when it matters.
+            Bantay Tubig automatically monitors water interruption advisories. When a
+            new advisory is detected, it immediately sends an SMS alert to all registered
+            residents in the affected area — no app to open, no feed to check. Just a
+            text message when it matters.
           </p>
         </section>
 
         <section>
           <h2 className="text-white font-semibold text-base mb-2">How it works</h2>
           <ol className="list-decimal list-inside flex flex-col gap-2 text-gray-400">
-            <li>An automated workflow checks the Facebook page every 30 minutes.</li>
-            <li>Each post is analyzed to detect water interruption language.</li>
-            <li>When an alert is found, SMS messages are sent to all registered numbers via Semaphore.</li>
+            <li>An automated workflow regularly checks for new water interruption advisories.</li>
+            <li>Each advisory is processed to extract affected areas and schedules.</li>
+            <li>When an alert is found, SMS messages are sent to all registered numbers.</li>
             <li>The alert is also saved so you can review it on your dashboard.</li>
           </ol>
         </section>
@@ -65,8 +65,7 @@ export default function AboutPage() {
           <h2 className="text-white font-semibold text-base mb-2">Technology</h2>
           <p className="text-gray-400">
             Bantay Tubig is built with Next.js, Firebase, and Tailwind CSS. The
-            monitoring workflow runs on n8n. SMS delivery is handled by Semaphore,
-            a Philippine SMS gateway.
+            monitoring workflow runs on n8n.
           </p>
         </section>
 

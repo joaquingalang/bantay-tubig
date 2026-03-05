@@ -20,7 +20,7 @@ const HOW_IT_WORKS = [
     step: "3",
     title: "Get SMS alerts",
     description:
-      "We monitor local Facebook announcements and send you an SMS the moment a water interruption is posted.",
+      "We monitor water service interruption advisories and send you an SMS the moment your area is affected.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function HomePage() {
           <span className="text-blue-400">water interruption</span> announcement
         </h1>
         <p className="text-gray-400 text-lg max-w-xl mb-8">
-          Bantay Tubig automatically monitors your local water service Facebook page
+          Bantay Tubig automatically monitors water interruption advisories
           and sends SMS alerts directly to your phone.
         </p>
 

@@ -24,7 +24,7 @@ export function InfoContent({
           BantayTubig is a community alert service. We monitor
           the official water provider's announcements and send you an SMS when a
           water interruption is reported in your area, so you can prepare without
-          having to check social media yourself.
+          having to check for updates yourself.
         </p>
       </section>
 
