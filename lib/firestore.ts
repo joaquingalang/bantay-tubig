@@ -3,6 +3,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  deleteDoc,
   doc,
   collection,
   query,
@@ -52,6 +53,12 @@ export async function ensureUserInFirestore(
       createdAt: Timestamp.now(),
     });
   }
+}
+
+export async function deleteUserData(uid: string): Promise<void> {
+  const db = getDb();
+  if (!db) throw new Error("Firebase is not configured.");
+  await deleteDoc(doc(db, "users", uid));
 }
 
 export async function getUserData(uid: string): Promise<UserData | null> {

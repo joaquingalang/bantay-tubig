@@ -4,17 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
-import { signOut } from "@/lib/auth";
 import { Button } from "@/components/ui/Button";
 
 export function Header() {
   const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  async function handleSignOut() {
-    await signOut();
-    setMenuOpen(false);
-  }
 
   function closeMenu() {
     setMenuOpen(false);
@@ -41,9 +35,6 @@ export function Header() {
               <Link href="/profile" className="hover:text-white transition-colors">
                 Profile
               </Link>
-              <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                Sign Out
-              </Button>
             </>
           )}
           {!user && (
@@ -95,9 +86,6 @@ export function Header() {
               <Link href="/profile" onClick={closeMenu} className="hover:text-white transition-colors">
                 Profile
               </Link>
-              <button onClick={handleSignOut} className="text-left hover:text-white transition-colors">
-                Sign Out
-              </button>
             </>
           )}
           {!user && (

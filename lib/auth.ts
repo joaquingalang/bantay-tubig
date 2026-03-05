@@ -6,6 +6,7 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signOut as firebaseSignOut,
+  deleteUser,
   type User,
 } from "firebase/auth";
 import { getFirebaseApp } from "@/lib/firebase";
@@ -41,4 +42,12 @@ export async function signUp(name: string, email: string, password: string): Pro
 export async function signOut(): Promise<void> {
   const auth = getFirebaseAuth();
   if (auth) await firebaseSignOut(auth);
+}
+
+export async function deleteAccount(): Promise<void> {
+  const auth = getFirebaseAuth();
+  if (!auth) throw new Error("Firebase is not configured.");
+  const user = auth.currentUser;
+  if (!user) throw new Error("No user is signed in.");
+  await deleteUser(user);
 }
