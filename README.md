@@ -1,18 +1,20 @@
 <p align="center">
- <img width="100px" src="" align="center" alt="Bantay Tubig" />
+ <img width="100px" src="https://github.com/user-attachments/assets/1e7e3803-6bc5-4a0d-9548-4cedb6e11e80" align="center" alt="Bantay Tubig" />
  <h2 align="center">Bantay Tubig</h2>
  <p align="center">Water Interruption Alerts Delivered Via SMS</p>
 </p>
 
+
+
 <p align="center">
     <a href="">
-      <img alt="GitHub Contributors" src=""/>
+      <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/joaquingalang/bantay-tubig?color=0088ff"/>
     </a>
     <a href="">
-      <img alt="Issues" src=""/>
+      <img alt="Issues" src="https://img.shields.io/github/issues/joaquingalang/bantay-tubig?color=0088ff"/>
     </a>
     <a href="">
-      <img alt="GitHub pull requests" src=""/>
+      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/joaquingalang/bantay-tubig?color=0088ff"/>
     </a>
   </p>
 
@@ -50,7 +52,7 @@ Bantay Tubig provides a practical alerting workflow for residents:
 ## Installation
 
 Bantay Tubig is a web-based tool and does not require local installation.
-1. Visit the [Bantay Tubig Web App]().
+1. Visit the [Bantay Tubig Web App](https://bantay-tubig.vercel.app/).
 2. Create an account with your email and password.
 3. Register up to three mobile numbers and select your barangay.
 4. Receive SMS alerts when water interruption advisories affect your area.
