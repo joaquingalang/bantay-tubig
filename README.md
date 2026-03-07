@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+ <img width="100px" src="" align="center" alt="Bantay Tubig" />
+ <h2 align="center">Bantay Tubig</h2>
+ <p align="center">Water Interruption Alerts Delivered Via SMS</p>
+</p>
 
-## Getting Started
+<p align="center">
+    <a href="">
+      <img alt="GitHub Contributors" src=""/>
+    </a>
+    <a href="">
+      <img alt="Issues" src=""/>
+    </a>
+    <a href="">
+      <img alt="GitHub pull requests" src=""/>
+    </a>
+  </p>
 
-First, run the development server:
+  <p align="center">
+    <a href="">View Demo</a>
+    ·
+    <a href="">Report Bug</a>
+    ·
+    <a href="">Request Feature</a>
+    ·
+    <a href="">FAQ</a>
+    ·
+    <a href="">Ask Question</a>
+  </p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About the Project
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Residents in the province experience frequent water service interruptions, but advisories are easy to miss when people have to check manually. Bantay Tubig automatically monitors water interruption advisories and sends SMS alerts to registered residents in affected areas, helping communities stay informed and prepared without needing to constantly check updates.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Bantay Tubig provides a practical alerting workflow for residents:
+- **Automated Advisory Monitoring** - Regularly checks for newly published water interruption advisories.
+- **Area-Based SMS Alerts** - Sends immediate text alerts to registered numbers when a matching interruption is detected.
+- **Dashboard Alert History** - Saves detected advisories so users can review affected areas and schedules.
+- **Resident-First Privacy Controls** - Stores mobile numbers securely for alerts only, with account and number removal options.
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js** - Web application framework for a fast, modern user experience.
+- **Firebase** - Backend services for authentication and data management.
+- **Tailwind CSS** - Utility-first styling for responsive, consistent UI design.
+- **n8n** - Automated workflow engine used for advisory monitoring and alert processing.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Bantay Tubig is a web-based tool and does not require local installation.
+1. Visit the [Bantay Tubig Web App]().
+2. Create an account with your email and password.
+3. Register up to three mobile numbers and select your barangay.
+4. Receive SMS alerts when water interruption advisories affect your area.
 
-## Deploy on Vercel
+## Acknowledgements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built as a community tool to help residents stay informed and prepared.
